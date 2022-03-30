@@ -1,0 +1,21 @@
+spring:
+  profile: dev
+  datasource:
+    platform: h2
+server:
+  port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: "env,beans"
+  endpoint:
+    shutdown:
+      enabled: true
+    env:
+      enabled: true
+
+  #spring.profiles.active=dev
+  #Esta es la forma en la que se configura la variable de entorno.
