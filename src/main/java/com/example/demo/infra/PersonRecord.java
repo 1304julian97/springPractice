@@ -3,24 +3,28 @@ package com.example.demo.infra;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
-import javax.persistence.*;
+//import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 //@Entity
-@Table(name = "person")
+@Table("person")
+@ToString
 public class PersonRecord {
 
     @Id
-    @Column(name = "id_person")
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column("id_person")
     private Integer id;
 
-    @Column(name = "name_person")
+    @Column("name_person")
     private String name;
 
-    @Column(name = "lastName_person")
+    @Column("lastName_person")
     private String lastName;
 }

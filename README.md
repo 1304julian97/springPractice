@@ -51,3 +51,31 @@ ejemplo:
 
 `http://localhost:8080/browser/index.html#/
 `
+
+## Actuator
+Actuator es una herramienta que nos permite ver el estado y propiedades del servicio actual.
+Actuator expone endpoints que retornan Json con la información.
+Por defecto Actuator solo tiene activados 3 endpoints.
+Para activarlos todos bastará con tener estas propiedades:
+
+```
+management.endpoints.web.exposure.include=*
+#management.endpoints.web.exposure.exclude=env,beans
+management.endpoint.shutdown.enabled=true
+management.endpoint.env.enabled=true
+```
+_Nota: Configuración creada para un archivo **.properties**_
+
+Como se observa la primera linea significa que activará todos los endpoints que actuator expone.
+La segunda línea (Comentada) dice que excluya informacioń de _env_ y de _beans_
+La tercera y cuarta línea hacen referencia a que los endpoints shtdown y env serán activados individualmente.
+
+_Nota2: La tercera y cuarta linea en **este caso en específico** pueden ser **omitidas** ya que estas configuraciones están expuestas **por defecto en la linea 1**._
+
+## Query Creation
+
+Spring por defecto trae muchas consultas o la forma de crearlas, sin la necesidad de usar el lenguaje SQL, bastará con 
+tener la escritura correcta y el framework por si solo hará el trabajo.
+
+[Ver Documentación Oficial](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation)
+

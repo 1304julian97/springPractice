@@ -4,19 +4,12 @@ import com.example.demo.infra.PersonRecord;
 import com.example.demo.infra.repository.PersonRepository;
 import com.example.demo.models.Person;
 import io.vavr.control.Option;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Component;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -25,27 +18,36 @@ public class PersonService {
 
     private final PersonRepository personRepository;
 
-    public Flux<Person> getAll() {
+    public Flux<Person> getAll(Option<Integer> optionalPageNumber, Option<Integer> optionalnumberPerPage) {
 /*        List<Person> people = new ArrayList<>();
         people.add(new Person("JUlian","Carvajal"));
         people.add(new Person("JUlian","Castro"));
         people.add(new Person("JUlian","Alzate"));
         people.add(new Person("JUlian","Montoya"));
         return people;*/
-        return findAll();
+        return findAll(optionalPageNumber,optionalnumberPerPage);
     }
 
-    public Flux<Person> findAll(){
-        return personRepository.findAll().map(personRecord -> new Person(personRecord.getName(),personRecord.getLastName()));
-        //return StreamSupport.stream(personRepository.findAll().spliterator(),false).map(personRecord -> new Person(personRecord.getName(),personRecord.getLastName())).collect(Collectors.toList());
+    public Flux<Person> findAll(Option<Integer> optionalPageNumber, Option<Integer> optionalnumberPerPage){
+
+        Integer pageNumber = optionalPageNumber.getOrElse(1)-1;
+        Integer numberPerPage = optionalnumberPerPage.getOrElse(10);
+        return personRepository.findAll(numberPerPage,pageNumber*numberPerPage).map(personRecord -> new Person(personRecord.getName(),personRecord.getLastName()));
     }
 
-    public Mono<PersonRecord> post(Person person){
-        return personRepository.save(new PersonRecord(null,person.getName(),person.getLastName()));
+    public Mono<Person> post(Person person){
+        return personRepository.save(new PersonRecord(null,person.getName(),person.getLastName())).map(personRecord -> new Person(personRecord.getName(),personRecord.getLastName()));
     }
 
-    public List<PersonRecord> findByName(String partialName, Option<Integer> optionalPageNumber, Option<Integer> optionalnumberPerPage) {
+    public Flux<Person> findByName(String partialName,Option<Integer> optionalPageNumber, Option<Integer> optionalnumberPerPage) {
         //return personRepository.finByName(partialName, PageRequest.of(optionalPageNumber.getOrElse(0),optionalnumberPerPage.getOrElse(10))).toList();
-        return personRepository.finByName(partialName).collectList().block();
+        Integer pageNumber = optionalPageNumber.getOrElse(0);
+        Integer numberPerPage = optionalnumberPerPage.getOrElse(10);
+        return personRepository.findByNameIgnoreCaseContains(partialName,PageRequest.of(pageNumber, numberPerPage)).map(personRecord -> new Person(personRecord.getName(),personRecord.getLastName()));
+    }
+
+
+    public Flux<Person> findByLastNameIgnoreCaseAndNameContains(String lastName, String name) {
+        return personRepository.findByLastNameIgnoreCaseAndNameContains(lastName,name).map(personRecord -> new Person(personRecord.getName(),personRecord.getLastName()));
     }
 }
