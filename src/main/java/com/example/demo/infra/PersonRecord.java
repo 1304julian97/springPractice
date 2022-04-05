@@ -13,7 +13,6 @@ import org.springframework.data.relational.core.mapping.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-//@Entity
 @Table("person")
 @ToString
 public class PersonRecord {

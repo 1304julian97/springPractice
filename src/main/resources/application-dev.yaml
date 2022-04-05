@@ -1,0 +1,34 @@
+management:
+    endpoint:
+        env:
+            enabled: true
+        shutdown:
+            enabled: true
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+server:
+    port: 8080
+spring:
+    datasource:
+        driverClassName: org.h2.Driver
+        jpa:
+            database-platform: org.hibernate.dialect.H2Dialect
+            defer-datasource-initialization: true
+        password: password
+        url: r2dbc:h2:mem:///testdb
+        username: sa
+    flyway:
+        enabled: true
+        password: password
+        schema: testdb
+        url: jdbc:h2:mem:///testdb
+        user: sa
+    h2:
+        console:
+            enabled: true
+            settings:
+                trace: false
+                web-allow-others: true
+    profile: dev

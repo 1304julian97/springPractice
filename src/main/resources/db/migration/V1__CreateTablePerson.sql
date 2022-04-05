@@ -1,3 +1,3 @@
+CREATE SCHEMA IF NOT EXISTS TESTH2;
 
-
-CREATE TABLE PERSON(id_person bigserial PRIMARY KEY, name_person VARCHAR(255),lastName_person VARCHAR(255));
+CREATE TABLE TESTH2.PERSON(id_person bigserial PRIMARY KEY, name_person VARCHAR(255),lastName_person VARCHAR(255));
