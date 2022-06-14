@@ -79,3 +79,13 @@ tener la escritura correcta y el framework por si solo hará el trabajo.
 
 [Ver Documentación Oficial](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation)
 
+## DOCKER
+En la raiz del proyecto está el Respectivo _Dockerfile_ que funciona para este proyecto.
+
+Pasos:
+1. Corra este comando
+  `sudo docker build -t spring_image .`
+2. Luego el comando para correr la imagen
+`sudo docker run -d -p 8080:8080 spring_image:latest`
+
+¡Listo! Ahora puedes usar los endpoints. 
