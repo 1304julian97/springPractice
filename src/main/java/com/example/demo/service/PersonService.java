@@ -50,4 +50,12 @@ public class PersonService {
     public Flux<Person> findByLastNameIgnoreCaseAndNameContains(String lastName, String name) {
         return personRepository.findByLastNameIgnoreCaseAndNameContains(lastName,name).map(personRecord -> new Person(personRecord.getName(),personRecord.getLastName()));
     }
+
+    public Flux<Person> findByNameIgnoreCase(String name){
+        System.out.println(name);
+        return personRepository.findByNameIgnoreCase(name).map(personRecord ->{
+            System.out.println(personRecord);
+            return new Person(personRecord.getName(),personRecord.getLastName());
+        });
+    }
 }

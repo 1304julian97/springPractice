@@ -1,6 +1,7 @@
 package com.example.demo.infra.repository;
 
 import com.example.demo.infra.PersonRecord;
+import io.vavr.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.repository.Query;
@@ -21,7 +22,5 @@ public interface PersonRepository extends R2dbcRepository<PersonRecord,Integer> 
     Flux<PersonRecord> findAll(Integer numberPerPage, Integer page );
 
 
-
-
-
+    Flux<PersonRecord> findByNameIgnoreCase(String name);
 }

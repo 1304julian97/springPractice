@@ -1,0 +1,8 @@
+type Query{
+    getPerson(exactNameIgnoreCase:String!): [Person]
+}
+
+type Person{
+    name: String!
+    lastName: String!
+}

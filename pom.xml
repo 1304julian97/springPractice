@@ -67,10 +67,27 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.graphql</groupId>
 			<artifactId>spring-graphql-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.graphql-java</groupId>
+			<artifactId>graphql-java-tools</artifactId>
+			<version>5.2.4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.github.kobylynskyi/graphql-codegen-maven-plugin -->
+		<dependency>
+			<groupId>io.github.kobylynskyi</groupId>
+			<artifactId>graphql-codegen-maven-plugin</artifactId>
+			<version>5.4.0</version>
+		</dependency>
+
 		<dependency>
 		<groupId>io.vavr</groupId>
 		<artifactId>vavr</artifactId>
@@ -92,6 +109,46 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>io.github.kobylynskyi</groupId>
+				<artifactId>graphql-codegen-maven-plugin</artifactId>
+				<!-- use the latest available version:
+                https://search.maven.org/artifact/io.github.kobylynskyi/graphql-codegen-maven-plugin -->
+				<version>5.4.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+<!--							<graphqlSchemaPaths>
+								<graphqlSchemaPath>${project.basedir}/src/main/resources/graphql/person.graphqls
+								</graphqlSchemaPath>
+							</graphqlSchemaPaths>-->
+							<apiReturnType>reactor.core.publisher.Mono</apiReturnType>
+							<apiReturnListType>reactor.core.publisher.Flux</apiReturnListType>
+							<graphqlSchemas>
+								<rootDir>${project.basedir}/src/main/resources/graphql</rootDir>
+							</graphqlSchemas>
+							<outputDir>${project.build.directory}/generated/sources/graphqlCodegen/main/java</outputDir>
+							<packageName>com.example.demo.graphql.generated</packageName>
+							<modelPackageName>com.example.demo.graphql.generated.model</modelPackageName>
+							<customTypesMapping>
+								<DateTime>java.util.Date</DateTime>
+							</customTypesMapping>
+							<modelNameSuffix>TO</modelNameSuffix>
+							<parentInterfaces>
+								<queryResolver>com.coxautodev.graphql.tools.GraphQLQueryResolver</queryResolver>
+								<mutationResolver>com.coxautodev.graphql.tools.GraphQLMutationResolver</mutationResolver>
+								<subscriptionResolver>com.coxautodev.graphql.tools.GraphQLSubscriptionResolver</subscriptionResolver>
+								<resolver><![CDATA[com.coxautodev.graphql.tools.GraphQLResolver<{{TYPE}}>]]></resolver>
+							</parentInterfaces>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 

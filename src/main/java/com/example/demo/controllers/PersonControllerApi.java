@@ -1,20 +1,15 @@
 package com.example.demo.controllers;
 
 
-import com.example.demo.infra.PersonRecord;
 import com.example.demo.models.Person;
 import com.example.demo.models.dtos.PersonDTO;
 import com.example.demo.service.PersonService;
 import io.vavr.control.Option;
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
